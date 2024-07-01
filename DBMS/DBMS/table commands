@@ -1,0 +1,47 @@
+create table Coustomer(
+Id varchar(20),
+Username varchar(20),
+Password varchar(20),
+Fname varchar(20),
+Lname varchar(20),
+Address varchar(20),
+Phone bigint,
+primary key(Id,Fname,Lname,Address,Phone));
+
+
+create table Products(
+P_Id varchar(20),
+Pname varchar(50),
+Description varchar(50),
+Category varchar(50),
+Price bigint,
+primary key(P_Id,Pname,Price));
+
+create table Cart(
+Id varchar(20),
+P_Id varchar(20),
+Pname varchar(50),
+Price bigint,
+Qty int,
+primary key(Id,P_Id),
+foreign key(Id) references Coustomer(Id),
+foreign key(P_Id,Pname,Price) references Products(P_Id,Pname,Price));
+
+
+create table Payment(
+Pay_Id varchar(20),
+Id varchar(20),
+Amount bigint,
+primary key(Pay_id,Id,Amount),
+Pay_type varchar(20));
+
+create table Order_details(
+Order_Id varchar(20) primary key, 
+Id varchar(20),
+Arriving_by date,
+foreign key(Id) references Coustomer(Id));
+
+
+select c.ID,d.Order_Id,c.Fname,c.Lname,ct.Pname,p.Amount,c.Address,c.Phone,d.Arriving_by from Customer as c join Cart as ct on c.Id=ct.Id join Payment as p on ct.Id=p.Id join Order_details as d on d.Id=p.Id where c.Id='033123';
+
+
